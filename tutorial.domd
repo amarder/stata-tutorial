@@ -1,0 +1,170 @@
+Date: 2012-07-09
+Title: Stata Tutorial
+
+These are my notes from going through section 1.1 of
+[Germán Rodríguez's Stata Tutorial][1].
+
+Stata the Big Picture (5 Minutes)
+---------------------------------
+
+Stata is industry standard for empirical research.  Stata comes with
+an externsive library of statistical methods, and there are additional
+user written methods that extend the functionality of Stata even
+further.
+
+Stata stores data in memory as a single matrix.  If you are familiar
+with Microsoft Excel Workbooks, Stata stores a single Worksheet in
+memory where each column has a name and each row is numbered from 1 to
+the total number of rows in the dataset.
+
+This tutorial aims to introduce you to the key features of Stata and
+its documentation so you can start your own empirical work.
+
+Typing Commands
+---------------
+
+The `display` command is useful for showing values at the command
+line.
+
+    display 1 + 2
+
+Use the `Page Up` key to recall the previous command evaluated.  This
+is particularly useful if you need to fix a typo.
+
+Commands can be abbreviated, `di` is equivalent to `display`.  I
+prefer to use the whole command name because it makes code explicit.
+
+Getting Help
+------------
+
+Use the `help` command if you know the name of the function and want
+more details.  Use the `findit` command if you want to find a
+function.  I end up using Google more than `findit`, but this may be a
+mistake.
+
+Unfortunately the help command opens a new window each time you use
+it, use the `nonew` option to prevent this behavior,
+`help help, nonew`.
+
+
+Reading Data Into Stata (10 Minutes)
+------------------------------------
+
+There are many different ways to read data into Stata.  To get a good
+overview of how to import data into Stata type `help import` in
+Stata's Command window.  The functions I use most are `import excel`
+and `insheet`.  `import excel` is great if you've been given an Excel
+workbook, while `insheet` is great if you've been given a
+comma-separated values (csv) file.
+
+Stata datasets are generally stored in files with a `.dta` extension.
+To read a Stata dataset use the `use` command.  For the purpose of
+this tutorial we will use a dataset shipped with Stata about
+automobiles.  Type in `sysuse auto` to load the dataset into memory.
+
+    sysuse auto, clear
+
+Descriptive Statistics (15 Minutes)
+-----------------------------------
+
+The `describe` command gives useful information about the variables in
+the dataset and the number of rows in the dataset.
+
+    describe
+
+The `summarize` command gives some useful summary statistics for each
+variable.
+
+    summarize
+
+You'll notice that 11 of 12 variables in the auto dataset are numeric
+and the `make` variable is a string.  To see what the make variable
+looks like, we can list the first few observations.
+
+    list make if _n <= 5
+
+To see if `make` uniquely identifies each row in the dataset we can
+use the `isid` function.
+
+    isid make
+
+When `isid` says nothing the variable list does uniquely identify each
+row.  Are cars uniquely idenitified by their weight and length?
+
+    duplicates report make
+    duplicates report weight length
+
+Imagine we are interested in looking at how foreign and domestic cars
+differ.  As a first step, it would be good to examine some summary
+statistics for foreign and domestic cars, the `tabstat` command makes
+this fairly easy.
+
+    tabstat price mpg weight length, by(foreign) stat(mean sd)
+
+You may have noticed from the output of the `summarize` command that
+`rep78` has 5 missing values.  We can look at those observations using
+the list command:
+
+    list if missing(rep78)
+
+Graphs
+------
+
+There are good graph galleries provided by [StataCorp][graphs1],
+[UCLA][graphs2], and [Survey Design and Analysis Services][graphs3].
+Below is a simple scatter plot of weight versus length:
+
+    graph twoway scatter weight length
+    graph export example.png, replace
+
+![Scatter Plot](https://dl.dropbox.com/u/58978266/example.png)
+
+Creating New Variables (20 Minutes)
+-----------------------------------
+
+There are a number of ways to create new variables or modifying
+existing variables.  The most important command in this section is the
+`generate` command.  Imagine we're curious about cars that are heavy
+for their length we could create a new variable
+
+    generate weight_per_length = weight / length
+
+This creates a new column in the dataset, for each car we have
+calculated the ratio of that car's weight to its length.  Let's take a
+look at the top five heaviest cars per length.
+
+    gsort -weight_per_length
+    list make weight_per_length if _n <= 5
+
+Another very useful command for generating new variables is the `egen`
+command.  This is particularly useful is you want to merge summary
+statistics for groups of cars back into the larger dataset.  For
+instance, we might be curious to see how a car's price compares to the
+average price among foreign or domestic cars.  We can find the average
+price for foreign and domestic cars using tabstat, but how do we make
+a column in the dataset with these values?
+
+    tabstat price, by(foreign)
+    egen ave_price = mean(price), by(foreign)
+    list foreign ave_price
+
+Break (10 Minutes)
+------------------
+
+Regressions (20 Minutes)
+------------------------
+
+Graphs (10 Minutes)
+-------------------
+
+Stata on the HBS Research Grid (10 Minutes)
+-------------------------------------------
+
+Best Practices (10 Minutes)
+---------------------------
+
+[1]: http://data.princeton.edu/stata/
+
+[graphs1]: http://www.stata.com/support/faqs/graphics/gph/statagraphs.html
+[graphs2]: http://www.ats.ucla.edu/stat/Stata/library/GraphExamples/default.htm
+[graphs3]: http://www.survey-design.com.au/Usergraphs.html
