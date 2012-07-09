@@ -1,7 +1,4 @@
-Date: 2012-07-09
-Title: Stata Tutorial
-
-These are my notes from going through section 1.1 of
+These are my notes from section 1.1 of
 [Germán Rodríguez's Stata Tutorial][1].
 
 Stata the Big Picture (5 Minutes)
@@ -242,10 +239,9 @@ Below is a simple scatter plot of weight versus length:
     .     graph twoway scatter weight length
     
     .     graph export example.png, replace
-    (note: file example.png not found)
     (file example.png written in PNG format)
 
-![Scatter Plot](https://dl.dropbox.com/u/58978266/example.png)
+![Scatter Plot](https://github.com/amarder/stata_tutorial/blob/master/example.png)
 
 Creating New Variables (20 Minutes)
 -----------------------------------
@@ -393,23 +389,21 @@ a column in the dataset with these values?
      74. | Domestic   6072.423 |
          +---------------------+
 
-Break (10 Minutes)
-------------------
-
 Regressions (20 Minutes)
 ------------------------
 
-Graphs (10 Minutes)
--------------------
-
-Stata on the HBS Research Grid (10 Minutes)
--------------------------------------------
-
 Best Practices (10 Minutes)
 ---------------------------
+
+These [notes on writing code][best-practices] by Matthew Gentzkow and
+Jesse Shapiro have some very good suggestions.
+
 
 [1]: http://data.princeton.edu/stata/
 
 [graphs1]: http://www.stata.com/support/faqs/graphics/gph/statagraphs.html
 [graphs2]: http://www.ats.ucla.edu/stat/Stata/library/GraphExamples/default.htm
 [graphs3]: http://www.survey-design.com.au/Usergraphs.html
+
+[best-practices]: http://faculty.chicagobooth.edu/matthew.gentzkow/research/ra_manual_codin
+> g.pdf
