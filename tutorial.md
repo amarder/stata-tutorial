@@ -1,11 +1,11 @@
 These are my notes from section 1.1 of
 [Germán Rodríguez's Stata Tutorial][1].
 
-Stata the Big Picture (5 Minutes)
----------------------------------
+Stata the Big Picture
+---------------------
 
 Stata is industry standard for empirical research.  Stata comes with
-an externsive library of statistical methods, and there are additional
+an extensive library of statistical methods, and there are additional
 user written methods that extend the functionality of Stata even
 further.
 
@@ -45,8 +45,8 @@ it, use the `nonew` option to prevent this behavior,
 `help help, nonew`.
 
 
-Reading Data Into Stata (10 Minutes)
-------------------------------------
+Reading Data Into Stata
+-----------------------
 
 There are many different ways to read data into Stata.  To get a good
 overview of how to import data into Stata type `help import` in
@@ -63,8 +63,8 @@ automobiles.  Type in `sysuse auto` to load the dataset into memory.
     .     sysuse auto, clear
     (1978 Automobile Data)
 
-Descriptive Statistics (15 Minutes)
------------------------------------
+Descriptive Statistics
+----------------------
 
 The `describe` command gives useful information about the variables in
 the dataset and the number of rows in the dataset.
@@ -138,7 +138,7 @@ use the `isid` function.
     .     isid make
 
 When `isid` says nothing the variable list does uniquely identify each
-row.  Are cars uniquely idenitified by their weight and length?
+row.  Are cars uniquely identified by their weight and length?
 
     .     duplicates report make
     
@@ -238,13 +238,13 @@ Below is a simple scatter plot of weight versus length:
 
     .     graph twoway scatter weight length
     
-    .     graph export example.png, replace
-    (file example.png written in PNG format)
+    .     graph export scatter.png, replace
+    (file scatter.png written in PNG format)
 
-![Scatter Plot](https://github.com/amarder/stata_tutorial/blob/master/example.png)
+![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter.png)
 
-Creating New Variables (20 Minutes)
------------------------------------
+Creating New Variables
+----------------------
 
 There are a number of ways to create new variables or modifying
 existing variables.  The most important command in this section is the
@@ -389,13 +389,43 @@ a column in the dataset with these values?
      74. | Domestic   6072.423 |
          +---------------------+
 
-Regressions (20 Minutes)
-------------------------
+Regressions
+-----------
 
-Best Practices (10 Minutes)
----------------------------
+To further explore the relationship between weight and length we can
+run a regression.
 
-These [notes on writing code][best-practices] by Matthew Gentzkow and
+    .     regress weight length
+    
+          Source |       SS       df       MS              Number of obs =      74
+    -------------+------------------------------           F(  1,    72) =  613.27
+           Model |  39461306.8     1  39461306.8           Prob > F      =  0.0000
+        Residual |  4632871.55    72  64345.4382           R-squared     =  0.8949
+    -------------+------------------------------           Adj R-squared =  0.8935
+           Total |  44094178.4    73  604029.841           Root MSE      =  253.66
+    
+    ------------------------------------------------------------------------------
+          weight |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+    -------------+----------------------------------------------------------------
+          length |   33.01988   1.333364    24.76   0.000     30.36187    35.67789
+           _cons |  -3186.047   252.3113   -12.63   0.000     -3689.02   -2683.073
+    ------------------------------------------------------------------------------
+
+We see that on average, each additional inch is associated with 33
+pounds.  We can plot the predicted values from the regression on the
+scatter plot from above.
+
+    .     graph twoway (scatter weight length) (lfit weight length)
+    
+    .     graph export scatter_lfit.png, replace
+    (file scatter_lfit.png written in PNG format)
+
+![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter_lfit.png)
+
+Best Practices
+--------------
+
+These [notes on writing code][booth] by Matthew Gentzkow and
 Jesse Shapiro have some very good suggestions.
 
 
@@ -405,5 +435,4 @@ Jesse Shapiro have some very good suggestions.
 [graphs2]: http://www.ats.ucla.edu/stat/Stata/library/GraphExamples/default.htm
 [graphs3]: http://www.survey-design.com.au/Usergraphs.html
 
-[best-practices]: http://faculty.chicagobooth.edu/matthew.gentzkow/research/ra_manual_codin
-> g.pdf
+[booth]: http://faculty.chicagobooth.edu/matthew.gentzkow/research/ra_manual_coding.pdf
