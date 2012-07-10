@@ -1,7 +1,7 @@
 capture program drop knit
 program define knit
   args in
-  
+
   _knit_with_code_tags "`in'"
   _make_code_blocks "`in'"
 end
@@ -9,7 +9,7 @@ end
 capture program drop _knit_with_code_tags
 program define _knit_with_code_tags
   args in
-  
+
   set more off
 
   file open f using "`in'", read
@@ -21,23 +21,23 @@ program define _knit_with_code_tags
   file read f line
   while r(eof) == 0 {
     if substr("`line'", 1, 4) == "    " {
-	  if !`in_code_block' {
-	    display "<code>"
-		local in_code_block = 1
-	  }
-	  else {
-	    display ""
+      if !`in_code_block' {
+        display "<code>"
+        local in_code_block = 1
       }
-	  display ". `line'"
-	  `line'
-	}
-	else {
-	  if `in_code_block' {
-	    display "</code>"
-		local in_code_block = 0
+      else {
+        display ""
       }
-	  display "`line'"
-	}
+      display ". `=ltrim("`line'")'"
+      `line'
+    }
+    else {
+      if `in_code_block' {
+        display "</code>"
+        local in_code_block = 0
+      }
+      display "`line'"
+    }
     file read f line
   }
 
@@ -49,42 +49,41 @@ end
 capture program drop _make_code_blocks
 program define _make_code_blocks
   args in
-  
+
   local out = subinstr("`in'", ".domd", ".md", 1)
   file open f_in using "`out'1", read
   file open f_out using "`out'", write replace
-  
+
   local in_code_block = 0
   local footer = 0
-  
+
   file read f_in line
   local line_no = 1
   while r(eof) == 0 {
     local header = `line_no' <= 5
-	local footer = ("`line'" == "      name:  <unnamed>" & !`header') | `footer'
+    local footer = ("`line'" == "      name:  <unnamed>" & !`header') | `footer'
     if "`line'" == "<code>" {
-	  local in_code_block = 1
-	}
-	else if "`line'" == "</code>" {
-	  local in_code_block = 0
-	}
-	else {
-	  if `in_code_block' {
-	    file write f_out "    `line'" _n
+      local in_code_block = 1
+    }
+    else if "`line'" == "</code>" {
+      local in_code_block = 0
+    }
+    else {
+      if `in_code_block' {
+        file write f_out "    `line'" _n
       }
-	  else {
-	    if !`header' & !`footer' {
-	      file write f_out "`line'" _n
-		}
+      else {
+        if !`header' & !`footer' {
+          file write f_out "`line'" _n
+        }
       }
-	}
+    }
     file read f_in line
-	local line_no = `line_no' + 1
+    local line_no = `line_no' + 1
   }
 
   file close f_in
   file close f_out
-
 end
 
 

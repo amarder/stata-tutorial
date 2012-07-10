@@ -23,7 +23,7 @@ Typing Commands
 The `display` command is useful for showing values at the command
 line.
 
-    .     display 1 + 2
+    . display 1 + 2
     3
 
 Use the `Page Up` key to recall the previous command evaluated.  This
@@ -60,7 +60,7 @@ To read a Stata dataset use the `use` command.  For the purpose of
 this tutorial we will use a dataset shipped with Stata about
 automobiles.  Type in `sysuse auto` to load the dataset into memory.
 
-    .     sysuse auto, clear
+    . sysuse auto, clear
     (1978 Automobile Data)
 
 Descriptive Statistics
@@ -69,7 +69,7 @@ Descriptive Statistics
 The `describe` command gives useful information about the variables in
 the dataset and the number of rows in the dataset.
 
-    .     describe
+    . describe
     
     Contains data from C:\Program Files (x86)\Stata12\ado\base/a/auto.dta
       obs:            74                          1978 Automobile Data
@@ -97,7 +97,7 @@ the dataset and the number of rows in the dataset.
 The `summarize` command gives some useful summary statistics for each
 variable.
 
-    .     summarize
+    . summarize
     
         Variable |       Obs        Mean    Std. Dev.       Min        Max
     -------------+--------------------------------------------------------
@@ -120,7 +120,7 @@ You'll notice that 11 of 12 variables in the auto dataset are numeric
 and the `make` variable is a string.  To see what the make variable
 looks like, we can list the first few observations.
 
-    .     list make if _n <= 5
+    . list make if _n <= 5
     
          +---------------+
          | make          |
@@ -135,12 +135,12 @@ looks like, we can list the first few observations.
 To see if `make` uniquely identifies each row in the dataset we can
 use the `isid` function.
 
-    .     isid make
+    . isid make
 
 When `isid` says nothing the variable list does uniquely identify each
 row.  Are cars uniquely identified by their weight and length?
 
-    .     duplicates report make
+    . duplicates report make
     
     Duplicates in terms of make
     
@@ -150,7 +150,7 @@ row.  Are cars uniquely identified by their weight and length?
             1 |           74             0
     --------------------------------------
     
-    .     duplicates report weight length
+    . duplicates report weight length
     
     Duplicates in terms of weight length
     
@@ -166,7 +166,7 @@ differ.  As a first step, it would be good to examine some summary
 statistics for foreign and domestic cars, the `tabstat` command makes
 this fairly easy.
 
-    .     tabstat price mpg weight length, by(foreign) stat(mean sd)
+    . tabstat price mpg weight length, by(foreign) stat(mean sd)
     
     Summary statistics: mean, sd
       by categories of: foreign (Car type)
@@ -187,7 +187,7 @@ You may have noticed from the output of the `summarize` command that
 `rep78` has 5 missing values.  We can look at those observations using
 the list command:
 
-    .     list if missing(rep78)
+    . list if missing(rep78)
     
          +----------------------------------------------------------------------------------+
       3. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
@@ -236,9 +236,9 @@ There are good graph galleries provided by [StataCorp][graphs1],
 [UCLA][graphs2], and [Survey Design and Analysis Services][graphs3].
 Below is a simple scatter plot of weight versus length:
 
-    .     graph twoway scatter weight length
+    . graph twoway scatter weight length
     
-    .     graph export scatter.png, replace
+    . graph export scatter.png, replace
     (file scatter.png written in PNG format)
 
 ![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter.png)
@@ -251,15 +251,15 @@ existing variables.  The most important command in this section is the
 `generatere curious about cars that are heavy
 for their length we could create a new variable
 
-    .     generate weight_per_length = weight / length
+    . generate weight_per_length = weight / length
 
 This creates a new column in the dataset, for each car we have
 calculated the ratio of that car's weight to its length.  Let's take a
 look at the top five heaviest cars per length.
 
-    .     gsort -weight_per_length
+    . gsort -weight_per_length
     
-    .     list make weight_per_length if _n <= 5
+    . list make weight_per_length if _n <= 5
     
          +------------------------------+
          | make                weight~h |
@@ -279,7 +279,7 @@ average price among foreign or domestic cars.  We can find the average
 price for foreign and domestic cars using tabstat, but how do we make
 a column in the dataset with these values?
 
-    .     tabstat price, by(foreign)
+    . tabstat price, by(foreign)
     
     Summary for variables: price
          by categories of: foreign (Car type)
@@ -292,9 +292,9 @@ a column in the dataset with these values?
        Total |  6165.257
     --------------------
     
-    .     egen ave_price = mean(price), by(foreign)
+    . egen ave_price = mean(price), by(foreign)
     
-    .     list foreign ave_price
+    . list foreign ave_price
     
          +---------------------+
          |  foreign   ave_pr~e |
@@ -365,8 +365,8 @@ a column in the dataset with these values?
      54. | Domestic   6072.423 |
      55. |  Foreign   6384.682 |
          |---------------------|
-     56. |  Foreign   6384.682 |
-     57. | Domestic   6072.423 |
+     56. | Domestic   6072.423 |
+     57. |  Foreign   6384.682 |
      58. |  Foreign   6384.682 |
      59. |  Foreign   6384.682 |
      60. | Domestic   6072.423 |
@@ -395,7 +395,7 @@ Regressions
 To further explore the relationship between weight and length we can
 run a regression.
 
-    .     regress weight length
+    . regress weight length
     
           Source |       SS       df       MS              Number of obs =      74
     -------------+------------------------------           F(  1,    72) =  613.27
@@ -415,9 +415,9 @@ We see that on average, each additional inch is associated with 33
 pounds.  We can plot the predicted values from the regression on the
 scatter plot from above.
 
-    .     graph twoway (scatter weight length) (lfit weight length)
+    . graph twoway (scatter weight length) (lfit weight length)
     
-    .     graph export scatter_lfit.png, replace
+    . graph export scatter_lfit.png, replace
     (file scatter_lfit.png written in PNG format)
 
 ![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter_lfit.png)
