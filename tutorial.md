@@ -4,7 +4,7 @@ These are my notes from section 1.1 of
 Stata the Big Picture
 ---------------------
 
-Stata is a commonly used tool for for empirical research.  Stata comes
+Stata is a commonly used tool for empirical research.  Stata comes
 with an extensive library of statistical methods, and there are
 additional user written methods that extend the functionality of Stata
 even further.
@@ -365,8 +365,8 @@ a column in the dataset with these values?
      54. | Domestic   6072.423 |
      55. |  Foreign   6384.682 |
          |---------------------|
-     56. |  Foreign   6384.682 |
-     57. | Domestic   6072.423 |
+     56. | Domestic   6072.423 |
+     57. |  Foreign   6384.682 |
      58. |  Foreign   6384.682 |
      59. |  Foreign   6384.682 |
      60. | Domestic   6072.423 |
