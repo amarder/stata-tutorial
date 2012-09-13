@@ -51,9 +51,9 @@ Reading Data Into Stata
 There are many different ways to read data into Stata.  To get a good
 overview of how to import data into Stata type `help import` in
 Stata's Command window.  The functions I use most are `import excel`
-and `insheet`.  `import excelve been given an Excel
-workbook, while `insheetve been given a
-comma-separated values (csv) file.
+and `insheet`.  `import excel` is great if you are working with an
+Excel workbook, while `insheet` is great if you have a comma-separated
+values (csv) file.
 
 Stata datasets are generally stored in files with a `.dta` extension.
 To read a Stata dataset use the `use` command.  For the purpose of
