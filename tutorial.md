@@ -248,7 +248,7 @@ Creating New Variables
 
 There are a number of ways to create new variables or modifying
 existing variables.  The most important command in this section is the
-`generatere curious about cars that are heavy
+`generate` command.  Imagine we are curious about cars that are heavy
 for their length we could create a new variable
 
     . generate weight_per_length = weight / length
@@ -365,8 +365,8 @@ a column in the dataset with these values?
      54. | Domestic   6072.423 |
      55. |  Foreign   6384.682 |
          |---------------------|
-     56. |  Foreign   6384.682 |
-     57. | Domestic   6072.423 |
+     56. | Domestic   6072.423 |
+     57. |  Foreign   6384.682 |
      58. |  Foreign   6384.682 |
      59. |  Foreign   6384.682 |
      60. | Domestic   6072.423 |

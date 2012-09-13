@@ -121,7 +121,7 @@ Creating New Variables
 
 There are a number of ways to create new variables or modifying
 existing variables.  The most important command in this section is the
-`generate` command.  Imagine we're curious about cars that are heavy
+`generate` command.  Imagine we are curious about cars that are heavy
 for their length we could create a new variable
 
     generate weight_per_length = weight / length
