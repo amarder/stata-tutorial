@@ -241,7 +241,7 @@ Below is a simple scatter plot of weight versus length:
     . graph export scatter.png, replace
     (file scatter.png written in PNG format)
 
-![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter.png)
+![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter.png)
 
 Creating New Variables
 ----------------------
@@ -365,8 +365,8 @@ a column in the dataset with these values?
      54. | Domestic   6072.423 |
      55. |  Foreign   6384.682 |
          |---------------------|
-     56. | Domestic   6072.423 |
-     57. |  Foreign   6384.682 |
+     56. |  Foreign   6384.682 |
+     57. | Domestic   6072.423 |
      58. |  Foreign   6384.682 |
      59. |  Foreign   6384.682 |
      60. | Domestic   6072.423 |
@@ -420,7 +420,7 @@ scatter plot from above.
     . graph export scatter_lfit.png, replace
     (file scatter_lfit.png written in PNG format)
 
-![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter_lfit.png)
+![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter_lfit.png)
 
 Best Practices
 --------------

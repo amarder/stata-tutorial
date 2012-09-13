@@ -114,7 +114,7 @@ Below is a simple scatter plot of weight versus length:
     graph twoway scatter weight length
     graph export scatter.png, replace
 
-![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter.png)
+![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter.png)
 
 Creating New Variables
 ----------------------
@@ -160,7 +160,7 @@ scatter plot from above.
     graph twoway (scatter weight length) (lfit weight length)
     graph export scatter_lfit.png, replace
 
-![Scatter Plot](https://github.com/amarder/stata_tutorial/raw/master/scatter_lfit.png)
+![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter_lfit.png)
 
 Best Practices
 --------------
