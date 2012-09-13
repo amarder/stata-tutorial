@@ -4,7 +4,7 @@ These are my notes from section 1.1 of
 Stata the Big Picture
 ---------------------
 
-Stata is the industry standard for empirical research.  Stata comes
+Stata is a commonly used tool for for empirical research.  Stata comes
 with an extensive library of statistical methods, and there are
 additional user written methods that extend the functionality of Stata
 even further.
