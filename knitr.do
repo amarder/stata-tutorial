@@ -87,4 +87,4 @@ program define _make_code_blocks
 end
 
 
-knit "Y:\stata-tutorial\tutorial.domd"
+knit "tutorial.domd"

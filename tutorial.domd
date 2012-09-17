@@ -1,8 +1,7 @@
-These are my notes from section 1.1 of
-[Germán Rodríguez's Stata Tutorial][1].
-
-Stata the Big Picture
----------------------
+---
+layout: post
+title: Stata Tutorial
+---
 
 Stata is a commonly used tool for empirical research.  Stata comes
 with an extensive library of statistical methods, and there are
@@ -162,11 +161,14 @@ scatter plot from above.
 
 ![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter_lfit.png)
 
-Best Practices
---------------
+Further Reading
+---------------
 
-These [notes on writing code][booth] by Matthew Gentzkow and
-Jesse Shapiro have some very good suggestions.
+[Germán Rodríguez's Stata Tutorial][1] is an excellent introduction to
+Stata..
+
+These [notes on writing code][booth] by Matthew Gentzkow and Jesse
+Shapiro have excellent suggestions on how to program with Stata.
 
 
 [1]: http://data.princeton.edu/stata/

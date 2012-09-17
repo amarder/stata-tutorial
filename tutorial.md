@@ -1,8 +1,7 @@
-These are my notes from section 1.1 of
-[Germán Rodríguez's Stata Tutorial][1].
-
-Stata the Big Picture
----------------------
+---
+layout: post
+title: Stata Tutorial
+---
 
 Stata is a commonly used tool for empirical research.  Stata comes
 with an extensive library of statistical methods, and there are
@@ -71,14 +70,14 @@ the dataset and the number of rows in the dataset.
 
     . describe
     
-    Contains data from C:\Program Files (x86)\Stata12\ado\base/a/auto.dta
+    Contains data from /Applications/Stata/ado/base/a/auto.dta
       obs:            74                          1978 Automobile Data
      vars:            12                          13 Apr 2011 17:45
      size:         3,182                          (_dta has notes)
-    -------------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------------------------
                   storage  display     value
     variable name   type   format      label      variable label
-    -------------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------------------------
     make            str18  %-18s                  Make and Model
     price           int    %8.0gc                 Price
     mpg             int    %8.0g                  Mileage (mpg)
@@ -91,7 +90,7 @@ the dataset and the number of rows in the dataset.
     displacement    int    %8.0g                  Displacement (cu. in.)
     gear_ratio      float  %6.2f                  Gear Ratio
     foreign         byte   %8.0g       origin     Car type
-    -------------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------------------------
     Sorted by:  foreign
 
 The `summarize` command gives some useful summary statistics for each
@@ -189,45 +188,45 @@ the list command:
 
     . list if missing(rep78)
     
-         +----------------------------------------------------------------------------------+
-      3. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
-         | AMC Spirit    |  3,799 |  22 |     . |      3.0 |    12 |  2,640 |    168 |   35 |
-         |----------------------------------------------------------------------------------|
-         |         displa~t         |         gear_r~o          |          foreign          |
-         |              121         |             3.08          |         Domestic          |
-         +----------------------------------------------------------------------------------+
+         +---------------------------------------------------------------------------------------------+
+      3. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn | displa~t |
+         | AMC Spirit    |  3,799 |  22 |     . |      3.0 |    12 |  2,640 |    168 |   35 |      121 |
+         |---------------------------------------------------------------------------------------------|
+         |                   gear_r~o                   |                    foreign                   |
+         |                       3.08                   |                   Domestic                   |
+         +---------------------------------------------------------------------------------------------+
     
-         +----------------------------------------------------------------------------------+
-      7. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
-         | Buick Opel    |  4,453 |  26 |     . |      3.0 |    10 |  2,230 |    170 |   34 |
-         |----------------------------------------------------------------------------------|
-         |         displa~t         |         gear_r~o          |          foreign          |
-         |              304         |             2.87          |         Domestic          |
-         +----------------------------------------------------------------------------------+
+         +---------------------------------------------------------------------------------------------+
+      7. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn | displa~t |
+         | Buick Opel    |  4,453 |  26 |     . |      3.0 |    10 |  2,230 |    170 |   34 |      304 |
+         |---------------------------------------------------------------------------------------------|
+         |                   gear_r~o                   |                    foreign                   |
+         |                       2.87                   |                   Domestic                   |
+         +---------------------------------------------------------------------------------------------+
     
-         +----------------------------------------------------------------------------------+
-     45. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
-         | Plym. Sapporo |  6,486 |  26 |     . |      1.5 |     8 |  2,520 |    182 |   38 |
-         |----------------------------------------------------------------------------------|
-         |         displa~t         |         gear_r~o          |          foreign          |
-         |              119         |             3.54          |         Domestic          |
-         +----------------------------------------------------------------------------------+
+         +---------------------------------------------------------------------------------------------+
+     45. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn | displa~t |
+         | Plym. Sapporo |  6,486 |  26 |     . |      1.5 |     8 |  2,520 |    182 |   38 |      119 |
+         |---------------------------------------------------------------------------------------------|
+         |                   gear_r~o                   |                    foreign                   |
+         |                       3.54                   |                   Domestic                   |
+         +---------------------------------------------------------------------------------------------+
     
-         +----------------------------------------------------------------------------------+
-     51. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
-         | Pont. Phoenix |  4,424 |  19 |     . |      3.5 |    13 |  3,420 |    203 |   43 |
-         |----------------------------------------------------------------------------------|
-         |         displa~t         |         gear_r~o          |          foreign          |
-         |              231         |             3.08          |         Domestic          |
-         +----------------------------------------------------------------------------------+
+         +---------------------------------------------------------------------------------------------+
+     51. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn | displa~t |
+         | Pont. Phoenix |  4,424 |  19 |     . |      3.5 |    13 |  3,420 |    203 |   43 |      231 |
+         |---------------------------------------------------------------------------------------------|
+         |                   gear_r~o                   |                    foreign                   |
+         |                       3.08                   |                   Domestic                   |
+         +---------------------------------------------------------------------------------------------+
     
-         +----------------------------------------------------------------------------------+
-     64. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn |
-         | Peugeot 604   | 12,990 |  14 |     . |      3.5 |    14 |  3,420 |    192 |   38 |
-         |----------------------------------------------------------------------------------|
-         |         displa~t         |         gear_r~o          |          foreign          |
-         |              163         |             3.58          |          Foreign          |
-         +----------------------------------------------------------------------------------+
+         +---------------------------------------------------------------------------------------------+
+     64. | make          |  price | mpg | rep78 | headroom | trunk | weight | length | turn | displa~t |
+         | Peugeot 604   | 12,990 |  14 |     . |      3.5 |    14 |  3,420 |    192 |   38 |      163 |
+         |---------------------------------------------------------------------------------------------|
+         |                   gear_r~o                   |                    foreign                   |
+         |                       3.58                   |                    Foreign                   |
+         +---------------------------------------------------------------------------------------------+
 
 Graphs
 ------
@@ -422,11 +421,14 @@ scatter plot from above.
 
 ![Scatter Plot](https://raw.github.com/amarder/stata-tutorial/master/scatter_lfit.png)
 
-Best Practices
---------------
+Further Reading
+---------------
 
-These [notes on writing code][booth] by Matthew Gentzkow and
-Jesse Shapiro have some very good suggestions.
+[Germán Rodríguez's Stata Tutorial][1] is an excellent introduction to
+Stata..
+
+These [notes on writing code][booth] by Matthew Gentzkow and Jesse
+Shapiro have excellent suggestions on how to program with Stata.
 
 
 [1]: http://data.princeton.edu/stata/
