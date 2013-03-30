@@ -87,4 +87,4 @@ program define _make_code_blocks
 end
 
 
-knit "tutorial.domd"
+knit "clustered-standard-errors.domd"
