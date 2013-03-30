@@ -3,11 +3,15 @@ layout: post
 title: [xtreg fe] Clustered Standard Errors Too Small!
 ---
 
-I have been implementing a fixed-effects estimator in Python so I can work with data that is too large to hold in memor
-> y.  To make sure I was calculating my coefficients and standard errors correctly I have been comparing the calculatio
-> ns of my Python code to results from Stata.  This lead me to find a surprising inconsistency in Stata's calculation o
-> f standard errors.  I illustrate the issue by comparing standard errors computed by Stata's `xtreg fe` command to tho
-> se computed by the standard `regress`.  To start, I use the first hundred observations of the `nlswork` dataset:
+I have been implementing a fixed-effects estimator in Python so I can
+work with data that is too large to hold in memory.  To make sure I
+was calculating my coefficients and standard errors correctly I have
+been comparing the calculations of my Python code to results from
+Stata.  This lead me to find a surprising inconsistency in Stata's
+calculation of standard errors.  I illustrate the issue by comparing
+standard errors computed by Stata's `xtreg fe` command to those
+computed by the standard `regress`.  To start, I use the first hundred
+observations of the `nlswork` dataset:
 
     . webuse nlswork, clear
     (National Longitudinal Survey.  Young Women 14-26 years of age in 1968)
@@ -81,18 +85,20 @@ For comparison, I then estimate the same model using `xtreg fe`:
     
     . matrix xtreg = e(V)
 
-Notice that the coefficients on age and tenure match perfectly across the two regressions, but the standard errors calc
-> ulated by xtreg fe are smaller.  Experimenting with my own code, I believe this discrepancy is due to a degrees of fr
-> eedom correction.  As Kevin Goulding explains [here](http://thetarzan.wordpress.com/2011/06/11/clustered-standard-err
-> ors-in-r/), clustered standard errors are generally computed by multiplying the estimated asymptotic variance by (M /
->  (M - 1)) ((N - 1) / (N - K)).  M is the number of individuals, N is the number of observations, and K is the number 
-> of parameters estimated.  The standard regress command correctly sets K = 12, xtreg fe sets K = 3.  Making the asympt
-> otic variance (99 - 12) / (99 - 3) = 0.90625 times the correct value.
+Notice that the coefficients on age and tenure match perfectly across
+the two regressions, but the standard errors calculated by xtreg fe
+are smaller.  Experimenting with my own code, I believe this
+discrepancy is due to a degrees of freedom correction.  As Kevin
+Goulding explains
+[here](http://thetarzan.wordpress.com/2011/06/11/clustered-standard-errors-in-r/),
+clustered standard errors are generally computed by multiplying the
+estimated asymptotic variance by (M / (M - 1)) ((N - 1) / (N - K)).  M
+is the number of individuals, N is the number of observations, and K
+is the number of parameters estimated.  The standard regress command
+correctly sets K = 12, xtreg fe sets K = 3.  Making the asymptotic
+variance (99 - 12) / (99 - 3) = 0.90625 times the correct value.
 
     . display ((99 - 12) / (99 - 3)) * regress[1, 1] - xtreg[1, 1]
     -2.661e-06
-          name:  <unnamed>
-           log:  /Users/amarder/Desktop/stata-tutorial/clustered-standard-errors.md1
-      log type:  text
-     closed on:  29 Mar 2013, 22:20:59
-    -----------------------------------------------------------------------------------------------------------------------
+
+Did I just find a bug in Stata?
