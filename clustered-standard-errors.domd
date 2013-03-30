@@ -10,8 +10,8 @@ been comparing the calculations of my Python code to results from
 Stata.  This lead me to find a surprising inconsistency in Stata's
 calculation of standard errors.  I illustrate the issue by comparing
 standard errors computed by Stata's `xtreg fe` command to those
-computed by the standard `regress`.  To start, I use the first hundred
-observations of the `nlswork` dataset:
+computed by the standard `regress` command.  To start, I use the first
+hundred observations of the `nlswork` dataset:
 
     webuse nlswork, clear
     keep if _n <= 100
@@ -21,14 +21,14 @@ I then estimate a fixed-effects model using regress:
     regress ln_w age tenure i.idcode, vce(cluster idcode)
     matrix regress = e(V)
 
-For comparison, I then estimate the same model using `xtreg fe`:
+For comparison, I estimate the same model using `xtreg fe`:
 
     xtset idcode
     xtreg ln_w age tenure, fe vce(cluster idcode)
     matrix xtreg = e(V)
 
 Notice that the coefficients on age and tenure match perfectly across
-the two regressions, but the standard errors calculated by xtreg fe
+the two regressions, but the standard errors calculated by `xtreg fe`
 are smaller.  Experimenting with my own code, I believe this
 discrepancy is due to a degrees of freedom correction.  As Kevin
 Goulding explains
@@ -36,8 +36,8 @@ Goulding explains
 clustered standard errors are generally computed by multiplying the
 estimated asymptotic variance by (M / (M - 1)) ((N - 1) / (N - K)).  M
 is the number of individuals, N is the number of observations, and K
-is the number of parameters estimated.  The standard regress command
-correctly sets K = 12, xtreg fe sets K = 3.  Making the asymptotic
+is the number of parameters estimated.  The standard `regress` command
+correctly sets K = 12, `xtreg fe` sets K = 3.  Making the asymptotic
 variance (99 - 12) / (99 - 3) = 0.90625 times the correct value.
 
     display ((99 - 12) / (99 - 3)) * regress[1, 1] - xtreg[1, 1]
