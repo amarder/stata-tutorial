@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [xtreg fe] Clustered Standard Errors Too Small!
+title: xtreg fe - Clustered Standard Errors - Use Caution
 ---
 
 I have been implementing a fixed-effects estimator in Python so I can
@@ -49,8 +49,6 @@ I then estimate a fixed-effects model using regress:
                  |
            _cons |   1.922783   .4005497     4.80   0.001     .9991134    2.846452
     ------------------------------------------------------------------------------
-    
-    . matrix regress = e(V)
 
 For comparison, I estimate the same model using `xtreg fe`:
 
@@ -82,14 +80,13 @@ For comparison, I estimate the same model using `xtreg fe`:
          sigma_e |  .26492811
              rho |  .43856575   (fraction of variance due to u_i)
     ------------------------------------------------------------------------------
-    
-    . matrix xtreg = e(V)
 
 Notice that the coefficients on age and tenure match perfectly across
 the two regressions, but the standard errors calculated by `xtreg fe`
-are smaller.  Experimenting with my own code, I believe this
-discrepancy is due to a degrees of freedom correction.  As Kevin
-Goulding explains
+are smaller.  This is due to a difference in the degrees of freedom
+adjustment used.  `regress` counts the fixed effects as coefficients
+estimated, while `xtreg fe` by default does not.  As Kevin Goulding
+explains
 [here](http://thetarzan.wordpress.com/2011/06/11/clustered-standard-errors-in-r/),
 clustered standard errors are generally computed by multiplying the
 estimated asymptotic variance by (M / (M - 1)) ((N - 1) / (N - K)).  M
@@ -98,7 +95,33 @@ is the number of parameters estimated.  The standard `regress` command
 correctly sets K = 12, `xtreg fe` sets K = 3.  Making the asymptotic
 variance (99 - 12) / (99 - 3) = 0.90625 times the correct value.
 
-    . display ((99 - 12) / (99 - 3)) * regress[1, 1] - xtreg[1, 1]
-    -2.661e-06
+To get the correct standard errors from `xtreg fe` use the `dfadj`
+option:
 
-Did I just find a bug in Stata?
+    . xtreg ln_w age tenure, fe vce(cluster idcode) dfadj
+    
+    Fixed-effects (within) regression               Number of obs      =        99
+    Group variable: idcode                          Number of groups   =         9
+    
+    R-sq:  within  = 0.2358                         Obs per group: min =         3
+           between = 0.1373                                        avg =      11.0
+           overall = 0.1740                                        max =        15
+    
+                                                    F(2,8)             =     13.73
+    corr(u_i, Xb)  = -0.0963                        Prob > F           =    0.0026
+    
+                                     (Std. Err. adjusted for 9 clusters in idcode)
+    ------------------------------------------------------------------------------
+                 |               Robust
+         ln_wage |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+    -------------+----------------------------------------------------------------
+             age |   .0025964   .0159834     0.16   0.875    -.0342613    .0394541
+          tenure |   .0356595      .0165     2.16   0.063    -.0023896    .0737086
+           _cons |   1.583834   .3961687     4.00   0.004     .6702675    2.497401
+    -------------+----------------------------------------------------------------
+         sigma_u |  .23415096
+         sigma_e |  .26492811
+             rho |  .43856575   (fraction of variance due to u_i)
+    ------------------------------------------------------------------------------
+
+This seems like an option that could be missed easily.
