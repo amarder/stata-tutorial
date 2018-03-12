@@ -3,6 +3,7 @@ layout: post
 title: Stata Tutorial
 ---
 
+
 Stata is a commonly used tool for empirical research.  Stata comes
 with an extensive library of statistical methods, and there are
 additional user written methods that extend the functionality of Stata
